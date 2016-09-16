@@ -1,22 +1,22 @@
 #!/bin/bash
 
-domain=$(sudo yunohost app setting sickrage domain)
+domain=$(sudo yunohost app setting sickgear domain)
 
-# Stop SickRage service
-sudo service sickrage stop
+# Stop SickGear service
+sudo service sickgear stop
 
 # Remove all files and directories
-sudo rm /etc/nginx/conf.d/$domain.d/sickrage.conf
-sudo rm -rf /home/yunohost.app/sickrage
-sudo rm -rf /opt/yunohost/sickrage
-sudo rm -rf /etc/init.d/sickrage
-sudo rm -rf /var/run/sickrage
+sudo rm /etc/nginx/conf.d/$domain.d/sickgear.conf
+sudo rm -rf /home/yunohost.app/sickgear
+sudo rm -rf /opt/yunohost/sickgear
+sudo rm -rf /etc/init.d/sickgear
+sudo rm -rf /var/run/sickgear
 
 # Disable auto-start at reboot
-sudo sudo update-rc.d -f sickrage remove
+sudo sudo update-rc.d -f sickgear remove
 
-# Delete SickRage user
-sudo userdel sickrage > /dev/null 2>&1
+# Delete SickGear user
+sudo userdel sickgear > /dev/null 2>&1
 
 # Restart php & nginx
 sudo killall php5-fpm

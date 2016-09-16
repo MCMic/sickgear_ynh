@@ -1,6 +1,6 @@
 {
-  "name": "SickRage",
-  "id": "sickrage",
+  "name": "SickGear",
+  "id": "sickgear",
   "description": {
     "en": "Automatic Video Library Manager for TV Shows. It watches for new episodes of your favorite shows, and when they are posted it does its magic."
   },
@@ -15,17 +15,17 @@
       {
         "name": "domain",
         "ask": {
-          "en": "Choose a domain for SickRage"
+          "en": "Choose a domain for SickGear"
         },
         "example": "domain.org"
       },
       {
         "name": "path",
         "ask": {
-          "en": "Choose a path for SickRage"
+          "en": "Choose a path for SickGear"
         },
-        "example": "/sickrage",
-        "default": "/sickrage"
+        "example": "/sickgear",
+        "default": "/sickgear"
       }
     ]
   }

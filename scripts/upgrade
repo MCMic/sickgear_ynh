@@ -1,15 +1,15 @@
 #!/bin/bash
 
-# Stop SickRage service
-sudo service sickrage stop
+# Stop SickGear service
+sudo service sickgear stop
 
-# Upgrade SickRage from official repository
-sudo cd /opt/yunohost/sickrage
+# Upgrade SickGear from official repository
+sudo cd /opt/yunohost/sickgear
 sudo git pull
 
 # Restore rights on files
-sudo chown -R sickrage /opt/yunohost/sickrage
+sudo chown -R sickgear /opt/yunohost/sickgear
 
-# Restarting SickRage
-sudo service sickrage start
+# Restarting SickGear
+sudo service sickgear start
 

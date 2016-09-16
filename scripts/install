@@ -4,19 +4,19 @@
 domain=$1
 path=$2
 
-sudo yunohost app checkurl $domain$path -a sickrage
+sudo yunohost app checkurl $domain$path -a sickgear
 if [[ ! $? -eq 0 ]]; then
   exit 1
 fi
 
 # Set variables
-package_dest=/opt/yunohost/sickrage
-data_dest=/home/yunohost.app/sickrage
+package_dest=/opt/yunohost/sickgear
+data_dest=/home/yunohost.app/sickgear
 python_bin=$package_dest/bin/python
 webroot=`echo "$path" | cut -c2-`
 
 # Create user
-id -u sickrage &>/dev/null ||  sudo useradd -d /home/yunohost.app/sickrage sickrage
+id -u sickgear &>/dev/null ||  sudo useradd -d /home/yunohost.app/sickgear sickgear
 
 # Make directories
 sudo mkdir -p $package_dest
@@ -25,12 +25,12 @@ sudo mkdir -p $data_dest
 # Install required packages
 sudo apt-get install -y python-pip python-virtualenv python-dev uwsgi uwsgi-plugin-python python-openssl python-mako python-lxml
 
-# Getting last release of SickRage
-sudo git clone https://github.com/SickRage/SickRage.git $package_dest
+# Getting last release of SickGear
+sudo git clone https://github.com/SickGear/SickGear.git $package_dest
 
 # Set rights
-sudo chown -R sickrage $package_dest
-sudo chown -R sickrage $data_dest
+sudo chown -R sickgear $package_dest
+sudo chown -R sickgear $data_dest
 sudo chmod 777 -R $package_dest
 sudo chmod 777 -R $data_dest
 
@@ -38,37 +38,37 @@ sudo chmod 777 -R $data_dest
 path=${path%/}
 
 # Monitor service
-sudo yunohost service add sickrage
+sudo yunohost service add sickgear
 
 # Configure Nginx
 sudo sed -i "s@PATHTOCHANGE@$path@g" ../conf/nginx.conf
-sudo cp ../conf/nginx.conf /etc/nginx/conf.d/$domain.d/sickrage.conf
+sudo cp ../conf/nginx.conf /etc/nginx/conf.d/$domain.d/sickgear.conf
 
 # Install Cheetah
 sudo virtualenv $package_dest
 sudo bash -c "source $package_dest/bin/activate && pip install cheetah"
 
 # Default file generation
-sudo echo "SR_USER=sickrage" > ../sources/sickrage.default
-sudo echo "SR_HOME=\"$package_dest\"" >> ../sources/sickrage.default
-sudo echo "SR_DATA=\"$data_dest\"" >> ../sources/sickrage.default
-sudo echo "SR_OPTS=\" --config=$data_dest/config.ini\"" >> ../sources/sickrage.default
-sudo echo "PYTHON_BIN=\"$python_bin\"" >> ../sources/sickrage.default
+sudo echo "SR_USER=sickgear" > ../sources/sickgear.default
+sudo echo "SR_HOME=\"$package_dest\"" >> ../sources/sickgear.default
+sudo echo "SR_DATA=\"$data_dest\"" >> ../sources/sickgear.default
+sudo echo "SR_OPTS=\" --config=$data_dest/config.ini\"" >> ../sources/sickgear.default
+sudo echo "PYTHON_BIN=\"$python_bin\"" >> ../sources/sickgear.default
 
-# Add new sickrage service
-sudo cp $package_dest/runscripts/init.ubuntu /etc/init.d/sickrage
-sudo cp ../sources/sickrage.default /etc/default/sickrage
-sudo chmod 777 /etc/init.d/sickrage
-sudo update-rc.d sickrage defaults
+# Add new sickgear service
+sudo cp $package_dest/runscripts/init.ubuntu /etc/init.d/sickgear
+sudo cp ../sources/sickgear.default /etc/default/sickgear
+sudo chmod 777 /etc/init.d/sickgear
+sudo update-rc.d sickgear defaults
 
-# Start/stop SickRage in order to generate config files
-sudo service sickrage start && sudo service sickrage stop
+# Start/stop SickGear in order to generate config files
+sudo service sickgear start && sudo service sickgear stop
 
-# Change webroot of SickRage
+# Change webroot of SickGear
 sudo sed -i "s@web_root = \"\"@web_root = \"/$webroot\"@g" $data_dest/config.ini
 
 # Generate SSOwat conf
 sudo service nginx restart
 echo $?
 sudo yunohost app ssowatconf
-sudo service sickrage start
+sudo service sickgear start
