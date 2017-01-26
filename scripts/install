@@ -23,16 +23,27 @@ sudo mkdir -p $package_dest
 sudo mkdir -p $data_dest
 
 # Install required packages
-sudo apt-get install -y python-pip python-virtualenv python-dev uwsgi uwsgi-plugin-python python-openssl python-mako python-lxml
+sudo apt-get install -y libsqlite3-dev libbz2-dev libreadline-dev libssl-dev zlib1g-dev
 
 # Getting last release of SickGear
-sudo git clone https://github.com/SickGear/SickGear.git $package_dest
+sudo git clone https://github.com/SickGear/SickGear.git $package_dest/app
 
 # Set rights
 sudo chown -R sickgear $package_dest
 sudo chown -R sickgear $data_dest
 sudo chmod 777 -R $package_dest
 sudo chmod 777 -R $data_dest
+
+# Install dependencies
+sudo git clone https://github.com/yyuu/pyenv $package_dest/.pyenv
+
+python_ver=2.7.13
+PYENV_ROOT=$package_dest/.pyenv $package_dest/.pyenv/bin/pyenv install $python_ver
+
+cd $package_dest/app
+$package_dest/.pyenv/versions/$python_ver/bin/pip install --upgrade pip
+$package_dest/.pyenv/versions/$python_ver/bin/pip install --upgrade pyopenssl ndg-httpsclient virtualenv lxml
+$package_dest/.pyenv/versions/$python_ver/bin/pip install -r requirements.txt
 
 # Remove trailing "/" for next commands
 path=${path%/}
@@ -44,22 +55,11 @@ sudo yunohost service add sickgear
 sudo sed -i "s@PATHTOCHANGE@$path@g" ../conf/nginx.conf
 sudo cp ../conf/nginx.conf /etc/nginx/conf.d/$domain.d/sickgear.conf
 
-# Install Cheetah
-sudo virtualenv $package_dest
-sudo bash -c "source $package_dest/bin/activate && pip install cheetah"
-
 # Default file generation
-sudo echo "SR_USER=sickgear" > ../sickgear.default
-sudo echo "SR_HOME=\"$package_dest\"" >> ../sickgear.default
-sudo echo "SR_DATA=\"$data_dest\"" >> ../sickgear.default
-sudo echo "SR_OPTS=\" --config=$data_dest/config.ini\"" >> ../sickgear.default
-sudo echo "PYTHON_BIN=\"$python_bin\"" >> ../sickgear.default
+sudo sed -i '/^ExecStart=/ s|^.*$|ExecStart=$package_dest/.pyenv/versions/$python_ver/bin/python2 $package_dest/app/SickBeard.py --systemd --datadir=$data_dest --port=%I|' $package_dest/app/init-scripts/init.systemd
 
 # Add new sickgear service
-sudo cp $package_dest/init-scripts/init.debian /etc/init.d/sickgear
-sudo cp ../sickgear.default /etc/default/sickgear
-sudo chmod 777 /etc/init.d/sickgear
-sudo update-rc.d sickgear defaults
+sudo cp $package_dest/app/init-scripts/init.systemd /etc/systemd/system/sickgear@.service
 
 # Start/stop SickGear in order to generate config files
 sudo service sickgear start && sudo service sickgear stop

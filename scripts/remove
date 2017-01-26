@@ -9,7 +9,7 @@ sudo service sickgear stop
 sudo rm /etc/nginx/conf.d/$domain.d/sickgear.conf
 sudo rm -rf /home/yunohost.app/sickgear
 sudo rm -rf /opt/yunohost/sickgear
-sudo rm -rf /etc/init.d/sickgear
+sudo rm -rf /etc/systemd/system/sickgear@.service
 sudo rm -rf /var/run/sickgear
 
 # Disable auto-start at reboot
