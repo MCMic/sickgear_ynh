@@ -49,15 +49,15 @@ sudo virtualenv $package_dest
 sudo bash -c "source $package_dest/bin/activate && pip install cheetah"
 
 # Default file generation
-sudo echo "SR_USER=sickgear" > ../sources/sickgear.default
-sudo echo "SR_HOME=\"$package_dest\"" >> ../sources/sickgear.default
-sudo echo "SR_DATA=\"$data_dest\"" >> ../sources/sickgear.default
-sudo echo "SR_OPTS=\" --config=$data_dest/config.ini\"" >> ../sources/sickgear.default
-sudo echo "PYTHON_BIN=\"$python_bin\"" >> ../sources/sickgear.default
+sudo echo "SR_USER=sickgear" > ../sickgear.default
+sudo echo "SR_HOME=\"$package_dest\"" >> ../sickgear.default
+sudo echo "SR_DATA=\"$data_dest\"" >> ../sickgear.default
+sudo echo "SR_OPTS=\" --config=$data_dest/config.ini\"" >> ../sickgear.default
+sudo echo "PYTHON_BIN=\"$python_bin\"" >> ../sickgear.default
 
 # Add new sickgear service
 sudo cp $package_dest/init-scripts/init.debian /etc/init.d/sickgear
-sudo cp ../sources/sickgear.default /etc/default/sickgear
+sudo cp ../sickgear.default /etc/default/sickgear
 sudo chmod 777 /etc/init.d/sickgear
 sudo update-rc.d sickgear defaults
 
