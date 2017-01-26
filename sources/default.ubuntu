@@ -1,5 +1,0 @@
-SR_USER=sickgear         					#$RUN_AS, username to run sickgear under, the default is sickgear
-SR_HOME="/opt/yunohost/sickgear/"       			#$APP_PATH, the location of sickgear.py, the default is /opt/sickgear
-SR_DATA="/opt/yunohost/sickgear/data"         			#$DATA_DIR, the location of sickgear.db, cache, logs, the default is /opt/sickgear
-SR_OPTS="--config=/home/yunohost.app/sickgear/config.ini"       #$EXTRA_DAEMON_OPTS, extra cli option for sickgear, i.e. " --config=/home/sickgear/config.ini"
-PYTHON_BIN="VIRTUALENVPYTHONBIN"

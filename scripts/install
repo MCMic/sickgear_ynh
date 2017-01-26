@@ -56,7 +56,7 @@ sudo echo "SR_OPTS=\" --config=$data_dest/config.ini\"" >> ../sources/sickgear.d
 sudo echo "PYTHON_BIN=\"$python_bin\"" >> ../sources/sickgear.default
 
 # Add new sickgear service
-sudo cp $package_dest/runscripts/init.ubuntu /etc/init.d/sickgear
+sudo cp $package_dest/init-scripts/init.debian /etc/init.d/sickgear
 sudo cp ../sources/sickgear.default /etc/default/sickgear
 sudo chmod 777 /etc/init.d/sickgear
 sudo update-rc.d sickgear defaults

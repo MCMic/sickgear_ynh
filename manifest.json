@@ -5,9 +5,9 @@
     "en": "Automatic Video Library Manager for TV Shows. It watches for new episodes of your favorite shows, and when they are posted it does its magic."
   },
   "developer": {
-    "name": "zerpex",
-    "email": "zerpex@gmail.com",
-    "url": "http://zerpex.fr"
+    "name": "mcmic",
+    "email": "",
+    "url": "https://github.com/MCMic/sickgear_ynh"
   },
   "multi_instance": "false",
   "arguments": {
