@@ -38,12 +38,12 @@ sudo chmod 777 -R $data_dest
 sudo git clone https://github.com/yyuu/pyenv $package_dest/.pyenv
 
 python_ver=2.7.13
-PYENV_ROOT=$package_dest/.pyenv $package_dest/.pyenv/bin/pyenv install $python_ver
+PYENV_ROOT=$package_dest/.pyenv sudo $package_dest/.pyenv/bin/pyenv install $python_ver
 
 cd $package_dest/app
-$package_dest/.pyenv/versions/$python_ver/bin/pip install --upgrade pip
-$package_dest/.pyenv/versions/$python_ver/bin/pip install --upgrade pyopenssl ndg-httpsclient virtualenv lxml
-$package_dest/.pyenv/versions/$python_ver/bin/pip install -r requirements.txt
+sudo $package_dest/.pyenv/versions/$python_ver/bin/pip install --upgrade pip
+sudo $package_dest/.pyenv/versions/$python_ver/bin/pip install --upgrade pyopenssl ndg-httpsclient virtualenv lxml
+sudo $package_dest/.pyenv/versions/$python_ver/bin/pip install -r requirements.txt
 
 # Remove trailing "/" for next commands
 path=${path%/}
