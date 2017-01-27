@@ -63,7 +63,7 @@ sudo sed -i '/^ExecStart=/ s|^.*$|ExecStart=$package_dest/.pyenv/versions/$pytho
 sudo cp $package_dest/app/init-scripts/init.systemd /etc/systemd/system/sickgear@.service
 
 # Start/stop SickGear in order to generate config files
-sudo service sickgear start && sudo service sickgear stop
+sudo service sickgear@8081 start && sudo service sickgear@8081 stop
 
 # Change webroot of SickGear
 sudo sed -i "s@web_root = \"\"@web_root = \"/$webroot\"@g" $data_dest/config.ini
@@ -72,4 +72,4 @@ sudo sed -i "s@web_root = \"\"@web_root = \"/$webroot\"@g" $data_dest/config.ini
 sudo service nginx restart
 echo $?
 sudo yunohost app ssowatconf
-sudo service sickgear start
+sudo service sickgear@8081 start
