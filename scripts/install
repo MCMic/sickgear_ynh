@@ -57,7 +57,7 @@ sudo sed -i "s@PATHTOCHANGE@$path@g" ../conf/nginx.conf
 sudo cp ../conf/nginx.conf /etc/nginx/conf.d/$domain.d/sickgear.conf
 
 # Default file generation
-sudo sed -i '/^ExecStart=/ s|^.*$|ExecStart=$package_dest/.pyenv/versions/$python_ver/bin/python2 $package_dest/app/SickBeard.py --systemd --datadir=$data_dest --port=%I|' $package_dest/app/init-scripts/init.systemd
+sudo sed -i "/^ExecStart=/ s|^.*$|ExecStart=$package_dest/.pyenv/versions/$python_ver/bin/python2 $package_dest/app/SickBeard.py --systemd --datadir=$data_dest --port=%I|" $package_dest/app/init-scripts/init.systemd
 
 # Add new sickgear service
 sudo cp $package_dest/app/init-scripts/init.systemd /etc/systemd/system/sickgear@.service
